@@ -1,0 +1,10 @@
+- name: installing vim
+  hosts: web
+  become: yes
+  vars:
+    my_pkg: vim
+  tasks:
+    - name: installing vim
+      yum:
+        name: " {{ my_pkg }}"
+        state: present
