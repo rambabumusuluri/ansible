@@ -1,0 +1,14 @@
+- name: installing multiple packages with loops
+  hosts: web
+  become: yes
+  vars:
+    rambabu:
+      - vim
+      - git
+      - htop
+  tasks:
+    - name: installing multipe rambabu
+      yum:
+        name: "{{ item }}"
+        state: present 
+      loop: "{{ rambabu }}"
