@@ -1,0 +1,19 @@
+- name: installing multiple packages with loops and starting nginx
+  hosts: db
+  become: yes
+  vars:
+    babu:
+       - git
+       - vim
+       - htop
+  tasks:
+    - name: installing packages with loops 
+      yum:
+        name: " {{ item }}"
+        state: present
+        loop: "{{ babu }}"
+    - name: starting nginx
+      service:
+        name: nginx
+        state: started
+    
