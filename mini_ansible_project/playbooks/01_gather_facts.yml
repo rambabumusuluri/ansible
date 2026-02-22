@@ -1,10 +1,10 @@
-- name: Gather facts and detect OS
+- name: "Collecting OS information"
   hosts: all
   become: yes
   tasks:
-    - name: Gather all facts
-      ansible.builtin.setup:
+  - name: "Collecting Facts"
+    ansible.builtin.setup:
+  - name: "prininting OS version"
+    ansible.builtin.debug:
+      msg: "OS Distribution is {{ ansible_facts['distribution']}} and the version is {{ ansible_facts['distribution_version']}}"
 
-    - name: Print OS family
-      ansible.builtin.debug:
-        msg: "OS family is {{ ansible_facts['os_family'] }}"
