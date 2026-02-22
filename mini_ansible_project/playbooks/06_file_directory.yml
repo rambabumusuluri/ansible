@@ -1,0 +1,14 @@
+- name: Simple file creation and content copy
+  hosts: all
+  become: yes
+  tasks:
+    - name: Create directory
+      ansible.builtin.file:
+        path: /tmp/testdir
+        state: directory
+
+    - name: Create file with content
+      ansible.builtin.copy:
+        content: "This is a test file\nCreated by Ansible"
+        dest: /tmp/testdir/testfile.txt
+        mode: '0644'

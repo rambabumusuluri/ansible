@@ -1,0 +1,33 @@
+- name: Install web server based on OS family
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+
+    - name: RedHat system - install httpd
+      ansible.builtin.yum:
+        name: httpd
+        state: present
+      when: ansible_facts['os_family'] == "RedHat"
+
+    - name: RedHat system - start httpd
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: yes
+      when: ansible_facts['os_family'] == "RedHat"
+
+    - name: Debian system - install apache2
+      ansible.builtin.apt:
+        name: apache2
+        state: present
+        update_cache: yes
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Debian system - start apache2
+      ansible.builtin.service:
+        name: apache2
+        state: started
+        enabled: yes
+      when: ansible_facts['os_family'] == "Debian"

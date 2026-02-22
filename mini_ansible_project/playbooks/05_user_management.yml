@@ -1,0 +1,13 @@
+- name: Create multiple users
+  hosts: all
+  become: yes
+  vars_files:
+    - ../vars/common_vars.yml
+  tasks:
+    - name: Create users
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        uid: "{{ item.uid }}"
+        state: present
+        shell: /bin/bash
+      loop: "{{ users }}"

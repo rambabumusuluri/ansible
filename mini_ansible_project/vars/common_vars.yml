@@ -1,0 +1,12 @@
+common_packages:
+  - git
+  - htop
+  - nginx
+
+users:
+  - name: devuser
+    uid: 1500
+  - name: testuser
+    uid: 1501
+
+app_port: 8080

@@ -1,0 +1,18 @@
+- name: Install multiple packages with loop
+  hosts: all
+  become: yes
+  vars_files:
+    - ../vars/common_vars.yml
+  tasks:
+    - name: Install common packages
+      ansible.builtin.package:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ common_packages }}"
+      notify: restart nginx_if_installed
+
+  handlers:
+    - name: restart nginx_if_installed
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
