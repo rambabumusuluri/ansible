@@ -1,0 +1,13 @@
+- name: variables at play level
+  hosts: local
+  connection: local
+  become: yes
+  vars:
+    name: "rambabu"
+    profession: "software"
+    location: "tcs calgary"
+  tasks:
+    - name: print details of rambabu
+      ansible.builtin.debug:
+        msg : "Babu details are : {{ name }} , {{ profession }} {{ location }}"
+

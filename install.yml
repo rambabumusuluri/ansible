@@ -1,0 +1,13 @@
+- name: installing and starting nginx
+  hosts: web
+  become: yes
+  tasks:
+    - name: installing nginx
+      yum:
+        name: nginx
+        state: present
+    - name: starting nginx
+      service:
+        name: nginx
+        state: started
+

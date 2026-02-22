@@ -1,0 +1,19 @@
+- name: install and run nginx
+  hosts: all
+  become: yes
+  vars:
+    rambabu:
+      - git
+      - htop
+      - vim
+      - nginx
+  tasks:
+    - name: install packges with loop
+      dnf:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ rambabu }}"
+    - name: start nginx
+      service:
+        name: nginx
+        state: started

@@ -1,0 +1,14 @@
+- name: installing nginx using variable
+  hosts: web
+  become: yes
+  vars: 
+    nginx_pkg: nginx
+  tasks:
+    - name: install nginx
+      yum:
+        name: "{{ nginx_pkg }}"
+        state: present
+    - name: restart nginx
+      service:
+        name: "{{ nginx_pkg }}"
+        state: restarted

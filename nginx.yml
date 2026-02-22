@@ -1,0 +1,15 @@
+- name: install and run nginx
+  hosts: all
+  become: yes
+  tasks:
+    - name: install nginx
+      dnf:
+        name: nginx
+        state: present
+      notify: restart nginx
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: started

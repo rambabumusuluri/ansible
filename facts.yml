@@ -1,0 +1,7 @@
+- name: "ansble facts"
+  hosts: web
+  become: yes
+  tasks:
+    - name: gathering facts
+      ansible.builtin.debug:
+        msg: "OS Version of web server is {{ ansible_facts['distribution'] }} and version is {{ ansible_facts['distribution_version'] }}"

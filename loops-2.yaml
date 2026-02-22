@@ -9,9 +9,9 @@
   tasks:
     - name: installing packages with loops 
       yum:
-        name: " {{ item }}"
+        name: "{{ item }}"
         state: present
-        loop: "{{ babu }}"
+      loop: "{{ babu }}"
     - name: starting nginx
       service:
         name: nginx

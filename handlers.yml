@@ -1,4 +1,3 @@
-
 - name: install and start sshd with handler
   hosts: db
   become: yes
@@ -7,12 +6,12 @@
       yum:
         name: nginx
         state: present
-      notify: restart nginx
+      notify: restart nginx 
 
     - name: sshd config
       copy:
-        src: /etc/ssh/sshd_config
-        dst: /etc/ssh/sshd_config
+        src: sshd_config
+        dest: /etc/ssh/sshd_config 
       notify: restart sshd
 
   handlers:
@@ -25,3 +24,4 @@
       service:
         name: sshd
         state: restarted
+

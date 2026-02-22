@@ -1,0 +1,6 @@
+- name: ping test on all 
+  hosts: all
+  become: yes
+  tasks:
+    - name: perform ping test on all 
+      ansible.builtin.ping:
