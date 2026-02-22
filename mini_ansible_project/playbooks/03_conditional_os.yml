@@ -1,33 +1,27 @@
-- name: Install web server based on OS family
+- name: "Installing RedHat and Debian specific package"
   hosts: all
   become: yes
-  gather_facts: yes
-
   tasks:
-
-    - name: RedHat system - install httpd
-      ansible.builtin.yum:
+    - name: "Install httpd for RedHat"
+      ansible.builtin.package:
         name: httpd
         state: present
       when: ansible_facts['os_family'] == "RedHat"
 
-    - name: RedHat system - start httpd
+    - name: "Start httpd for RedHat"
       ansible.builtin.service:
         name: httpd
         state: started
-        enabled: yes
       when: ansible_facts['os_family'] == "RedHat"
 
-    - name: Debian system - install apache2
-      ansible.builtin.apt:
+    - name: "Install apache2 for Debian"
+      ansible.builtin.package:
         name: apache2
         state: present
-        update_cache: yes
       when: ansible_facts['os_family'] == "Debian"
 
-    - name: Debian system - start apache2
+    - name: "Start apache2 for Debian"
       ansible.builtin.service:
         name: apache2
         state: started
-        enabled: yes
       when: ansible_facts['os_family'] == "Debian"
