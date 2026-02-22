@@ -1,0 +1,37 @@
+
+
+1. **01_gather_facts.yml**
+
+> Gathers system facts and prints the OS family of the host.
+
+2. **02_install_packages.yml**
+
+> Installs multiple common packages (git, htop, nginx) in a loop and restarts nginx if it was installed or changed.
+
+3. **03_conditional_os.yml**
+
+> Runs OS-specific tasks based on whether the host is RedHat or Debian.
+
+4. **04_template_deploy.yml**
+
+> Deploys an application configuration file from a Jinja2 template and restarts the service if changed.
+
+5. **05_user_management.yml**
+
+> Creates multiple users dynamically using a loop and variables.
+
+6. **06_file_directory.yml**
+
+> Creates a directory and a file with content, demonstrating basic file management.
+
+
+
+For each playbook, you can add **why it matters** in one sentence:
+
+* 01 → Shows you can gather and use facts.
+* 02 → Demonstrates loops, package management, and handlers.
+* 03 → Shows conditional logic based on host facts.
+* 04 → Demonstrates templates and service management with handlers.
+* 05 → Shows automation of user management.
+* 06 → Shows basic file and directory management.
+
