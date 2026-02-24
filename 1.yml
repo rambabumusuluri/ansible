@@ -1,0 +1,10 @@
+- name: "Collecting OS information"
+  hosts: all
+  become: yes
+  tasks:
+  - name: "Collecting Facts"
+    ansible.builtin.setup:
+  - name: "prininting OS version"
+    ansible.builtin.debug:
+      msg: "OS Distribution is {{ ansible_facts['distribution']}} and the version is {{ ansible_facts['distribution_version']}}" 
+    

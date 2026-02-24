@@ -1,0 +1,21 @@
+- name: install packages and restart nginx
+  hosts: all
+  become: yes
+  vars:
+    rambabu:
+      - git
+      - htop
+      - vim
+      - httpd
+  tasks:
+    - name: install packages with loop
+      ansible.builtin.package:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ rambabu }}"
+
+  handlers:
+    - name: restart apache
+      ansible.builtin.service:
+        name: httpd
+        state: restarted

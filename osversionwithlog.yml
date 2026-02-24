@@ -1,0 +1,11 @@
+- name: list OS verson and append to a single file
+  hosts: all
+  become: yes
+  gather_facts: yes
+  tasks:
+    - name: Collect OS version
+      ansible.builtin.lineinfile:
+        path: /tmp/babu
+        line: "[{{ group_names[0] }}] {{ inventory_hostname }} {{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }}"
+        create: yes
+      delegate_to: localhost
