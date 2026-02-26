@@ -1,18 +1,17 @@
-- name: Install and configure web server based on OS
+- name: Install and start web server based on OS family and print summary
   hosts: all
   become: yes
   gather_facts: yes
 
-  vars:
-    # OS-specific service names
-    rhel_service: httpd
-    debian_service: apache2
+  vars_files:
+    - vars/web.yml   # load variables from external file
 
   tasks:
 
-    - name: Set service name for RHEL
+    # Dynamically pick the service based on OS
+    - name: Set service name for RedHat
       set_fact:
-        web_service: "{{ rhel_service }}"
+        web_service: "{{ redhat_service }}"
       when: ansible_os_family == "RedHat"
 
     - name: Set service name for Debian
@@ -20,39 +19,46 @@
         web_service: "{{ debian_service }}"
       when: ansible_os_family == "Debian"
 
+    # Install the web server package
     - name: Install web package
       ansible.builtin.package:
         name: "{{ web_service }}"
         state: present
 
+    # Start and enable the service
     - name: Start and enable web service
       ansible.builtin.service:
         name: "{{ web_service }}"
         state: started
         enabled: yes
 
-    - name: Deploy custom index.html
+    # Deploy custom index.html using Jinja2 template
+    - name: Deploy index.html
       ansible.builtin.template:
         src: index.j2
         dest: /var/www/html/index.html
       notify: Restart web service
 
+    # Check the service status
     - name: Check service status
       ansible.builtin.command: systemctl is-active {{ web_service }}
       register: service_status
       changed_when: false
       failed_when: false
 
-    - name: Create summary file on control node
+    # Print a summary to the control node
+    - name: Print summary to control node
       ansible.builtin.lineinfile:
-        path: /tmp/web_summary
+        path: /tmp/summary
         line: "{{ inventory_hostname }} | {{ ansible_distribution }} | {{ web_service }} | {{ service_status.stdout }}"
         create: yes
       delegate_to: localhost
 
   handlers:
-
+    # Restart the service only if template changed
     - name: Restart web service
       ansible.builtin.service:
         name: "{{ web_service }}"
         state: restarted
+
+
