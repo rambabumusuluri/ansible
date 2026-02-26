@@ -4,10 +4,12 @@
   gather_facts: yes
 
   vars:
+    # OS-specific service names
     rhel_service: httpd
     debian_service: apache2
 
   tasks:
+
     - name: Set service name for RHEL
       set_fact:
         web_service: "{{ rhel_service }}"
@@ -39,6 +41,7 @@
       ansible.builtin.command: systemctl is-active {{ web_service }}
       register: service_status
       changed_when: false
+      failed_when: false
 
     - name: Create summary file on control node
       ansible.builtin.lineinfile:
